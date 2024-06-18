@@ -1,6 +1,69 @@
-{
-  "files.associations": {
-    "vector": "cpp",
-    "ostream": "cpp"
-  }
+{"background.enabled": true,
+"background.useDefault": false,
+//"https://images.unsplash.com/photo-1550940934-bc02c7c59618?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=100"
+"background.customImages": [
+  "https://images.unsplash.com/photo-1550940934-bc02c7c59618?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=100"
+],
+"background.style": {
+  "content": "''",
+  "pointer-events": "none",
+  "position": "absolute",
+  "z-index": "99999",
+  "width": "100%",
+  "height": "100%",
+  "background-position": "center",
+  "background-repeat": "no-repeat",
+  "background-size": "100%,100%",
+  "opacity": 0.2
+},
+"files.associations": {
+  "vector": "cpp",
+  "ostream": "cpp",
+  "iostream": "cpp",
+  "array": "cpp",
+  "atomic": "cpp",
+  "bit": "cpp",
+  "*.tcc": "cpp",
+  "cctype": "cpp",
+  "clocale": "cpp",
+  "cmath": "cpp",
+  "compare": "cpp",
+  "concepts": "cpp",
+  "cstdarg": "cpp",
+  "cstddef": "cpp",
+  "cstdint": "cpp",
+  "cstdio": "cpp",
+  "cstdlib": "cpp",
+  "ctime": "cpp",
+  "cwchar": "cpp",
+  "cwctype": "cpp",
+  "deque": "cpp",
+  "string": "cpp",
+  "unordered_map": "cpp",
+  "exception": "cpp",
+  "algorithm": "cpp",
+  "functional": "cpp",
+  "iterator": "cpp",
+  "memory": "cpp",
+  "memory_resource": "cpp",
+  "numeric": "cpp",
+  "random": "cpp",
+  "string_view": "cpp",
+  "system_error": "cpp",
+  "tuple": "cpp",
+  "type_traits": "cpp",
+  "utility": "cpp",
+  "initializer_list": "cpp",
+  "iomanip": "cpp",
+  "iosfwd": "cpp",
+  "istream": "cpp",
+  "limits": "cpp",
+  "new": "cpp",
+  "numbers": "cpp",
+  "sstream": "cpp",
+  "stdexcept": "cpp",
+  "streambuf": "cpp",
+  "typeinfo": "cpp"
 }
+}
+
