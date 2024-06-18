@@ -14,7 +14,7 @@ class side
     protected:
     bool isOccupied;
     int id;
-    playerNum player;
+    int player;
     vector<vertex*> owners = vector<vertex*>();
 
 
@@ -27,6 +27,9 @@ class side
     }
     int getId(){
         return this->id;
+    }
+    int getPlayer(){
+        return this->player;
     }
     
 };

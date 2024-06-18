@@ -101,6 +101,9 @@ namespace ariel{
                 }
 
                 if (!check) {
+                    cout << "Creating new side: "<< counter << endl;
+                    cout << "TempV[j]: " << tempV[j]->getId() << endl;
+                    cout << "LayoutIndex: " << layoutIndex << endl;
                     tempS2 = new side(tempV[j], this->vertices[layoutIndex], counter);
                     counter++;
                     tempV[j]->addNeighbor(this->vertices[layoutIndex], tempS2);
@@ -164,40 +167,40 @@ void board::printBoard() {
     std::cout << help << std::endl;
       std::string ascii_art =
 R"(
-                    r1  v1 r2       r6 v6 r7          v10
+                    r0  v1 r1       r6 v6 r7      r11  v10 r12
               ' v0 ╓═└       ╙═v2  «²└       ╙═v7ç «²└    ╙═ v11
                 ▐              ▌║             ▐ ▌             l
                 ▐      [h0]    ▌║     [h1]    j ▌    [h2]     l
-              r0▐   Mountains  ▌║r3  Pasture  j ▌r8 Forest    l
+              r5▐   Mountains  ▌║r2  Pasture  j ▌r8 Forest    lr13
                 ▐              U║             ▐ ▌             ▓
                 v5ⁿ═ç      ¿═└ v3'ⁿ+,      ╓²└v8 ╙*w      ,+ⁿv12
-            ╓*└  "r5,'ⁿv4ⁿ-,r4└  ╙*r10ⁿv9└ r9ⁿ`  ╙═; ╙v13└ ╓*└  "ⁿw
+        r16 ╓*└  "r4,'ⁿv4ⁿ-,r3└  ╙*r10ⁿv9└ r9ⁿ`  ╙r15 ╙v13└r14└  "ⁿw r27
         v17          └*╕┌²└          ╙═ ▄ⁿ-         'ⁿ╤ ═╘          v22
         ▌▐             ▌▐              ═▌             ▐               ▌
-        ▌▐    [h3]     ▌▐     [h4]     ═▌    [h5]     ▐     [h6]      ▌
+    r20 ▌▐    [h3]     ▌▐r17   [h4]    ═▌r21 [h5]     ▐r24  [h6]      ▌r28
         ▌▐   Fields    ▌▐     Hills    ═▌   Pasture   ▐     Hills     ▌
          ¬,          ,»▀└w           ,∞ ▀⌂           v20¬,          v23
-      ,v16,-ⁿw,   ╓*└ ╓v14 ╙*w   ,«ⁿ└,v18ç ╙═;   ,═ⁿ`╓═ⁿw,"ⁿw    ╓*└ ╓**╖
-v28ⁿ"     └*w v15╓═└      ⁿ═╖v19 ╓²└     'ⁿ≡,v21,≡ⁿ-     └*wv24 ╓═└      ⁿ═çv35           
+  r31,v16,-ⁿw,   ╓*r18╓v14 r23_ ,«ⁿ└,v18çr26;   r25`╓═  r30w   r29*└ ╓**╖  r45
+v28ⁿ"     r19 v15╓═└      ⁿ═╖v19 ╓²└r22   'ⁿ≡,v21,≡ⁿ-     └*wv24 ╓═└      ⁿ═çv35           
  ▌             [▐`            `U├             ▐ ▌             ▓▐`            'U          
- ▌    [h7]     [▐     [h8]     U║    [h9]     j ▌    [h10]    l▐     [h11]    U          
- ▌   Fields    [▐    Forest    U║   Desert    j ▌   Forest    l▐    Mountains U           
+ ▌r35 [h7]     [▐     [h8]     U║    [h9]     j ▌    [h10]    l▐     [h11]    U            
+ ▌   Fields    [▐r32 Forest    U║r36 Desert   j ▌r39 Forest   l▐r42 Mountains U  r46         
  ▌             [▐              U║             j ▌             l▐              U           
 v27∞,       ┌═ⁿv25*╖       ,╓*└v29═ç       ,⌐ⁿv31ⁿw,       ┌═╙v33*╖        ╓²v36
-     └*v26ⁿ,,≡ⁿ- ╙═ç ⁿ═v30└ ╓═╙ `ⁿ═,'ⁿ═v32└ a*└ └*w └*v34ⁿ-,∞ⁿ- ⁿ═╖ ⁿ═v37└
-         xⁿ└         ⁿ═,,═ⁿ'        -ⁿw ╓*└         └*▄ ∞ⁿ"        `ⁿ═
+   r34└*v26'r33'- ╙═ç ⁿ═v30└ ╓═╙ `ⁿ═,'ⁿ═v32└ a*└ └*w └*v34ⁿ-,∞ⁿ- ⁿ═╖ ⁿ═v37└ r47
+         xⁿ└      r38'═,,═'r37   r41-ⁿw ╓*└r40   r44└*▄ ∞ⁿr43   r48 ⁿ═
         ▌▐             ▌▐              ═▌             ▐               ▌
-        ▌▐    [h12]    ▌▐     [h13]    ═▌    [h14]    ▐      [h15]    ▌
-        ▌▐   Forest    ▌▐   Mountains  ═▌   Fields    ▐     Pasture   ▌
-         w            ┌▌▐ç            ╓-▌,           ,▐ w            ┌▌
+    r52 ▌▐     [h12]   ▌▐     [h13]    ═▌     [h14]   ▐      [h15]    ▌
+        ▌▐    Forest   ▌▐r49 Mountains ═▌r53 Fields   ▐r56  Pasture   ▌r59
+         w            ┌▌▐ç            ╓-▌,           ,▐              ┌▌
         v40╙═w    ,∞ⁿ╓+v38;ⁿ═,    ╓═╙▄═v41"*w    ,w*,▄v43▄"═╖    ,∞ⁿv45
-               v39▄ⁿ└      └*wv42;+ⁿ-      └═▄v44▄═└      `ⁿ+▄v46
+           r51 v39▄ⁿr50   r55wv42;+r54   r58═▄v44▄═r57  r61ⁿ+▄v46 r60
                 ▐              ▌├             ▐ ▌             ▓
-                ▐     [h16]    ▌├    [h17]    j ▌    [h18]    l
-                ▐     Hills    ▌├   Fields    j ▌   Pasture   l
+                ▐     [h16]    ▌├      [h17]  j ▌     [h18]   l
+            r65 ▐     Hills    ▌├r62 Fields   j ▌r66 Pasture  l r69
                 ▐              ▌├             ▐ ▌             l
                 v49ⁿw,______,mⁿ-v47└*w______╓═ⁿv50ⁿ═ç_______,wv52
-                       v48             v51            v53
+                  r64  v48  r63   r68  v51 r67    r71 v53  r70
 )";
 
     for (int i = 0 ; i< 10 ; i++){
@@ -276,16 +279,64 @@ v27∞,       ┌═ⁿv25*╖       ,╓*└v29═ç       ,⌐ⁿv31ⁿw,     
     // string placeholder = "r0";
     // int replace_pos = ascii_art.find(placeholder);
     // ascii_art.replace(replace_pos, placeholder.length(), " " + to_string(this->vertices[0]->getSides()[0]->getId()) + " ");
-    int scounter = 0;
+    bool checked[72] = {false};
     for(auto v : this->hexagonboard){
         for(auto h: v){
             for(int i = 0;i<6;i++){
-                cout << h->getSide(i)->getId() << endl;
-                string placeholder = "r" + to_string(scounter);
+                //cout << "hexa num  "<< h->getNum()<<"- "<< h->getSide(i)->getId() <<" and scounter =  "<<scounter << endl;
+                
+                string placeholder = "r" + to_string(h->getSide(i)->getId());
                 int replace_pos = ascii_art.find(placeholder);
-                if(replace_pos != string::npos){
-                    ascii_art.replace(replace_pos, placeholder.length(),ANSI_BRIGHT_CYAN+ "" + to_string(h->getSide(i)->getId()) + "" + ANSI_RESET + " ");
-                    scounter++;
+                // if(scounter == 11)
+                // {cout << h->getSide(i)->getOwners()[1]->getId() <<  "     HERE  " << h->getSide(i)->getId() << endl;}
+                if(replace_pos == string::npos){
+                    cout << "Not found" << endl;
+                }
+                
+                if(replace_pos != string::npos&& !checked[h->getSide(i)->getId()])
+                {
+                    if(h->getSide(i)->getIsOccupied())
+                    {
+                        int x =h->getSide(i)->getPlayer();
+                        switch (x)
+                        {
+                        case 1:
+                            if(h->getSide(i)->getId()<10){
+                            ascii_art.replace(replace_pos, placeholder.length(), "" + ANSI_YELLOW + "»" + ANSI_RESET + " ");
+                            }
+                            else{
+                            ascii_art.replace(replace_pos, placeholder.length(), " " + ANSI_YELLOW + "»" + ANSI_RESET + " ");
+                            }
+                            break;
+                        case 2:
+                            if(h->getSide(i)->getId()<10){
+                            ascii_art.replace(replace_pos, placeholder.length(), "" + ANSI_MAGENTA + "»" + ANSI_RESET + " ");
+                            }
+                            else{
+                            ascii_art.replace(replace_pos, placeholder.length(), " " + ANSI_MAGENTA + "»" + ANSI_RESET + " ");
+                            }
+                            break;
+                        case 3:
+                            if(h->getSide(i)->getId()<10){
+                            ascii_art.replace(replace_pos, placeholder.length(), "" + ANSI_CYAN + "»" + ANSI_RESET + " ");
+                            }
+                            else{
+                            ascii_art.replace(replace_pos, placeholder.length(), " " + ANSI_CYAN + "»" + ANSI_RESET + " ");
+                            }
+                            break;
+                        }
+                    }
+                    else{
+                        cout << "Not occupied: "<< h->getSide(i)->getId() << endl;
+                        if(h->getSide(i)->getId()<10){
+                            ascii_art.replace(replace_pos, placeholder.length(), "  ");
+                        }
+                        else{
+                            ascii_art.replace(replace_pos, placeholder.length(),"   ");
+                        }
+                        //ascii_art.replace(replace_pos, placeholder.length(), ANSI_BRIGHT_CYAN +"r" +to_string(h->getSide(i)->getId()) + ANSI_RESET + "");
+                    }
+                   checked[h->getSide(i)->getId()] = true;
                 }
             }
         }

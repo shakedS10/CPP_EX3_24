@@ -11,7 +11,7 @@ namespace ariel{
 
     void side::setOcupied(int num){
         this->isOccupied = true;
-        this->player = playerNum(num);
+        this->player = num;
     }
 
     vector<vertex*> side::getOwners(){
