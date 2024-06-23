@@ -2,7 +2,7 @@ CXX = clang++
 CXXFLAGS = -std=c++11 -Wall -Wextra
 
 # List all source files (SRCS) and corresponding object files (OBJS)
-SRCS = board.cpp hexagon.cpp side.cpp vertex.cpp catan.cpp
+SRCS = board.cpp hexagon.cpp side.cpp vertex.cpp catan.cpp player.cpp
 OBJS = $(SRCS:.cpp=.o)
 EXEC = catan
 

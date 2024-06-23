@@ -1,6 +1,5 @@
 #pragma once
 #include <iostream>
-#include "playernum.hpp"
 #include "side.hpp"
 #include <vector>
 
@@ -35,6 +34,7 @@ class vertex
     int getPlayer(){
         return this->player;
     }
+    bool canBuildTown(int num);
     
 };
 }

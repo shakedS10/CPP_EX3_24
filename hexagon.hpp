@@ -1,9 +1,9 @@
 #pragma once
 
 #include <iostream>
-#include "playernum.hpp"
 #include "vertex.hpp"
 #include "side.hpp"
+#include "player.hpp"
 #include <vector>
 
 using namespace std;
@@ -30,6 +30,7 @@ class side;
         vector<vertex*> vertices = vector<vertex*>();
         vector<side*> sides = vector<side*>();
         int num;
+        string type;
     public:
         hexagon(int num);
         vector<vertex*> getV();
@@ -44,6 +45,12 @@ class side;
         }
         side* getSide(int i){
             return this->sides[i];
+        }
+        void setType(string type){
+            this->type = type;
+        }
+        string getType(){
+            return this->type;
         }
 
     };

@@ -14,8 +14,8 @@ std::vector<int> generateSeededRandomNumbers(int seed, int count = 18) {
     // Initialize the random number generator with the provided seed
     std::mt19937 generator(seed);
     
-    // Define a uniform integer distribution between 2 and 16 (inclusive)
-    std::uniform_int_distribution<int> distribution(2, 16);
+    // Define a uniform integer distribution between 2 and 12 (inclusive)
+    std::uniform_int_distribution<int> distribution(2, 12);
     
     // Generate the random numbers
     std::vector<int> randomNumbers;
@@ -154,7 +154,29 @@ namespace ariel{
                 this->hexagonboard.push_back(hexagonsrow);
             }
             
-        }        
+        }
+        this->hexagonboard[0][0]->setType("Mountains");
+        this->hexagonboard[0][1]->setType("Pasture");
+        this->hexagonboard[0][2]->setType("Forest");
+        this->hexagonboard[1][0]->setType("Fields");
+        this->hexagonboard[1][1]->setType("Hills");
+        this->hexagonboard[1][2]->setType("Pasture");
+        this->hexagonboard[1][3]->setType("Hills");
+        this->hexagonboard[2][0]->setType("Fields");
+        this->hexagonboard[2][1]->setType("Forest");
+        this->hexagonboard[2][2]->setType("Desert");
+        this->hexagonboard[2][3]->setType("Forest");
+        this->hexagonboard[2][4]->setType("Mountains");
+        this->hexagonboard[3][0]->setType("Forest");
+        this->hexagonboard[3][1]->setType("Mountains");
+        this->hexagonboard[3][2]->setType("Fields");
+        this->hexagonboard[3][3]->setType("Pasture");
+        this->hexagonboard[4][0]->setType("Hills");
+        this->hexagonboard[4][1]->setType("Fields");
+        this->hexagonboard[4][2]->setType("Pasture");
+        // this->vertices[0]->setOcupied(1);
+        // this->vertices[20]->setOcupied(2);
+        // this->vertices[40]->setOcupied(3);     
     }
  
 
@@ -202,7 +224,7 @@ v27∞,       ┌═ⁿv25*╖       ,╓*└v29═ç       ,⌐ⁿv31ⁿw,     
                 v49ⁿw,______,mⁿ-v47└*w______╓═ⁿv50ⁿ═ç_______,wv52
                   r64  v48  r63   r68  v51 r67    r71 v53  r70
 )";
-
+    
     for (int i = 0 ; i< 10 ; i++){
         if(rndNumbers[i]<10 ){
             std::string placeholder = "[h" + std::to_string(i) + "]";
@@ -225,13 +247,10 @@ v27∞,       ┌═ⁿv25*╖       ,╓*└v29═ç       ,⌐ⁿv31ⁿw,     
             std::string placeholder = "[h" + std::to_string(i) + "]";
             int replace_pos = ascii_art.find(placeholder);
             ascii_art.replace(replace_pos, placeholder.length(), " " +ANSI_RED+std::to_string(this->rndNumbers[i])+ANSI_RESET+ "  ");
-    }
+        }
     
     }
-     this->vertices[0]->setOcupied(1);
-     this->vertices[0]->setOcupied(1);
-     this->vertices[1]->setOcupied(2);
-     this->vertices[2]->setOcupied(3);
+    
     for (int i = 0; i < 54; i++)
     {
         if(this->vertices[i]->getIsOccupied() == 1){
@@ -253,6 +272,7 @@ v27∞,       ┌═ⁿv25*╖       ,╓*└v29═ç       ,⌐ⁿv31ⁿw,     
         }
         else if (this->vertices[i]->getIsOccupied() == 2)
         {
+            cout << "vertex " << i << " is occupied by a city" << endl;
             std::string placeholder = "v" + std::to_string(i);
             int replace_pos = ascii_art.find(placeholder);
             switch (this->vertices[i]->getPlayer())
@@ -274,17 +294,17 @@ v27∞,       ┌═ⁿv25*╖       ,╓*└v29═ç       ,⌐ⁿv31ⁿw,     
         int replace_pos = ascii_art.find(placeholder);
         ascii_art.replace(replace_pos, placeholder.length(), "" + ANSI_GREEN + std::to_string(i) + ANSI_RESET + " ");
         }
-        
+     
     }
     // string placeholder = "r0";
     // int replace_pos = ascii_art.find(placeholder);
     // ascii_art.replace(replace_pos, placeholder.length(), " " + to_string(this->vertices[0]->getSides()[0]->getId()) + " ");
     bool checked[72] = {false};
+    
     for(auto v : this->hexagonboard){
         for(auto h: v){
             for(int i = 0;i<6;i++){
                 //cout << "hexa num  "<< h->getNum()<<"- "<< h->getSide(i)->getId() <<" and scounter =  "<<scounter << endl;
-                
                 string placeholder = "r" + to_string(h->getSide(i)->getId());
                 int replace_pos = ascii_art.find(placeholder);
                 // if(scounter == 11)
@@ -350,7 +370,24 @@ v27∞,       ┌═ⁿv25*╖       ,╓*└v29═ç       ,⌐ⁿv31ⁿw,     
 
 
     void board::setOcupiedCity(int playernum, int v){
-        this->vertices[v]->setOcupied(playernum);
+        bool canBuild = false;
+        for(auto s : this->vertices[v]->getSides()){
+            if(s->getIsOccupied()){
+                canBuild = true;
+            }
+        }
+        cout << "Can build: " << canBuild << endl;
+        vertex* tempV = this->vertices[v];
+        cout << "here" << endl;
+        cout << "tempV id: " << tempV->getId() << endl;
+        cout << "can build town: " << tempV->canBuildTown(playernum) << endl;
+        if(tempV->canBuildTown(playernum)&&canBuild){
+            tempV->setOcupied(playernum);
+        }
+        else{
+            cout << "Cannot build town here" << endl;
+            throw "Cannot build town here";
+        }
     }
 
     void board::setOcupiedRoad(int playernum, int v1, int v2){
@@ -358,15 +395,146 @@ v27∞,       ┌═ⁿv25*╖       ,╓*└v29═ç       ,⌐ⁿv31ⁿw,     
         for (auto s : tempS)
         {
             if(s->getOwners()[0]->getId() == this->vertices[v2]->getId() || s->getOwners()[1]->getId() == this->vertices[v2]->getId()){
-                s->setOcupied(playernum);
+                if(s->canBuildRoad(playernum)){
+                    s->setOcupied(playernum);
+                }
+                else{
+                    cout << "Cannot build road here" << endl;
+                    throw "Cannot build road here";
+                }
             }
         }
+    }
+
+    void board::addPlayer(player* p){
+        this->players.push_back(p);
     }
 
     board* board::getBoard(){
         return this;
     }
 
+    int board::rollDices(){
+        int result = 0;
+        static int seed = 0;
+        result = generateSeededRandomNumbers(seed,1)[0];
+        seed++;
+        for(auto h : this->hexagonboard){
+            for(auto hex : h){
+                if(hex->getNum() == result){
+                    vector<vector<int>> temp;
+                    for(auto v : hex->getV()){
+                        if(v->getIsOccupied() == 1){
+                            for(auto p : this->players){
+                                if(p->getPlayerNum() == v->getPlayer()){
+                                    p->addResource(hex->getType(),1);
+                                }
+                            }
+                        }
+                        if(v->getIsOccupied() == 2){
+                            for(auto p : this->players){
+                                if(p->getPlayerNum() == v->getPlayer()){
+                                    p->addResource(hex->getType(),2);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
+    bool board::checkPlayer(int num){
+        for(auto p : this->players){
+            if(p->getPlayerNum() == num){
+                if(p->getPlayerNum() == this->turn){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }   
+
+    void board::nextTurn(){
+        if(this->turn == this->players.size()){
+            this->turn = 1;
+        }
+        else{
+            this->turn++;
+        }
+    }
+
+    void board::firstSettlements(player* p,int v1,int v2){
+        if(v1<0 || v1>53){
+            cout << "Invalid vertex number" << endl;
+            throw "Invalid vertex number";
+        }
+        if(v2<0 || v2>53){
+            cout << "Invalid vertex number" << endl;
+            throw "Invalid vertex number";
+        }
+        if(this->vertices[v1]->getIsOccupied() == 0 && this->vertices[v2]->getIsOccupied() == 0){
+            vector<vertex*> tempV1 = this->vertices[v1]->getNeighbors();
+            vector<vertex*> tempV2 = this->vertices[v2]->getNeighbors();
+            for(auto v : tempV1){
+                if(v->getIsOccupied() == 1 || v->getIsOccupied() == 2 || v->getId() == v2){
+                    cout << "Cannot build here" << endl;
+                    throw "Cannot build here";
+                }
+            }
+            for(auto v : tempV2){
+                if(v->getIsOccupied() == 1 || v->getIsOccupied() == 2 || v->getId() == v1){
+                    cout << "Cannot build here" << endl;
+                    throw "Cannot build here";
+                }
+            }
+            this->vertices[v1]->setOcupied(p->getPlayerNum());
+            this->vertices[v2]->setOcupied(p->getPlayerNum());
+            for(auto h: this->hexagonboard){
+                for(auto hex : h){
+                    for(auto v : hex->getV()){
+                        if(v->getId() == v1 || v->getId() == v2){
+                            if(v->getIsOccupied() == 1){
+                                p->addResource(hex->getType(),1);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        else{
+            cout << "Cannot build here" << endl;
+            throw "Cannot build here";
+        }
+    }
+
+    string board::getNameFromTurn(){
+        for(auto p : this->players){
+            if(p->getPlayerNum() == this->turn){
+                return p->getName();
+            }
+        }
+        return "No player found";
+    }
+
+    int board::isGameEnd(){
+        for(auto p : this->players){
+            if(p->getVictoryPoints() >= 10){
+                return p->getPlayerNum();
+            }
+        }
+        return 0;
+    }
+
+    player* board::getPlayerByName(string name){
+        for(auto p : this->players){
+            if(p->getName() == name){
+                return p;
+            }
+        }
+        return nullptr;
+    }
 
 
 

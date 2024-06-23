@@ -1,16 +1,15 @@
 #pragma once
 
 #include <iostream>
-#include "playernum.hpp"
 #include "vertex.hpp"
 #include <vector>
 
 
 using namespace std;
 namespace ariel{
-class vertex;
-class side
-{
+    class vertex;
+    class side
+    {
     protected:
     bool isOccupied;
     int id;
@@ -31,6 +30,8 @@ class side
     int getPlayer(){
         return this->player;
     }
+    bool canBuildRoad(int num);
+
     
 };
 }
