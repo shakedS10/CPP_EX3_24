@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 #include "board.hpp"
+#include "card.hpp"
 
 
 using namespace std;
@@ -10,6 +11,7 @@ using namespace std;
 namespace ariel
 {
     class board;
+    class card;
     class player
     {
     private:
@@ -21,6 +23,8 @@ namespace ariel
         int wheat;
         int ore;
         int wool;
+        vector<card*> cards;
+        int knightCount;
 
     public:
         player(string name, int playerNum);
@@ -38,5 +42,26 @@ namespace ariel
         }
         void trade(player* p);
         void printResources();
+        void buyCard(board* b);
+        void addCard(card* c);
+        void showCards();
+        void useCard(int i,board* b);
+        int getwood(){
+            return this->wood;
+        }
+        int getbricks(){
+            return this->bricks;
+        }
+        int getwheat(){
+            return this->wheat;
+        }
+        int getore(){
+            return this->ore;
+        }
+        int getwool(){
+            return this->wool;
+        }
+        void removeKnight();
+        void removeVictoryCard();
     };
 } // namespace ariel

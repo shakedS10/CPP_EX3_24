@@ -28,13 +28,13 @@ namespace ariel{
                 }
             }
             cout << "check: " << check << endl;
-        }
-        if(check == false){
-            for(auto v : this->owners){
-                for(auto s : v->getSides()){
-                    cout << "s->getPlayer(): " << s->getPlayer() << endl;
-                    if(s->getPlayer() == num){
-                        check = true;
+            if(check == false){
+                for(auto v : this->owners){
+                    for(auto s : v->getSides()){
+                        cout << "s->getPlayer(): " << s->getPlayer() << endl;
+                        if(s->getPlayer() == num){
+                            check = true;
+                        }
                     }
                 }
             }

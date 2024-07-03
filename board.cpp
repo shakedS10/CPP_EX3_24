@@ -55,15 +55,9 @@ namespace ariel{
         int row = 0;
         std::vector<int> randomNumbers = generateSeededRandomNumbers(10,19);
         this->rndNumbers = randomNumbers;
-        cout << "Random Numbers: " << endl;
-        for (auto i : randomNumbers)
-        {
-            cout << i << endl;
-        }
-        //vector<int> randomNumbers = {2,3,4,5,6,7,8,9,10,11,12,11,10,9,8,7,6,5,4}; 
         vector<hexagon*> hexagonsrow;
         for (int i = 0; i<19; i++){
-            cout << i << endl;
+            // cout << i << endl;
             hexagon* tempH = new hexagon(randomNumbers[i]);
             vector<vertex*> tempV(6, nullptr);
             for (size_t j = 0; j < 6; j++)
@@ -101,9 +95,6 @@ namespace ariel{
                 }
 
                 if (!check) {
-                    cout << "Creating new side: "<< counter << endl;
-                    cout << "TempV[j]: " << tempV[j]->getId() << endl;
-                    cout << "LayoutIndex: " << layoutIndex << endl;
                     tempS2 = new side(tempV[j], this->vertices[layoutIndex], counter);
                     counter++;
                     tempV[j]->addNeighbor(this->vertices[layoutIndex], tempS2);
@@ -136,8 +127,8 @@ namespace ariel{
             {
                 row = 5;
             }
-            cout << "Row: " << row << endl;
-            cout << "CurRow: " << curRow << endl;
+            // cout << "Row: " << row << endl;
+            // cout << "CurRow: " << curRow << endl;
             if(curRow == row)
             {
                 hexagonsrow.push_back(tempH);
@@ -145,7 +136,7 @@ namespace ariel{
             else
             {
                 this->hexagonboard.push_back(hexagonsrow);
-                cout << "Pushed" << endl;
+                // cout << "Pushed" << endl;
                 hexagonsrow.clear();
                 hexagonsrow.push_back(tempH);
             }
@@ -174,9 +165,26 @@ namespace ariel{
         this->hexagonboard[4][0]->setType("Hills");
         this->hexagonboard[4][1]->setType("Fields");
         this->hexagonboard[4][2]->setType("Pasture");
-        // this->vertices[0]->setOcupied(1);
-        // this->vertices[20]->setOcupied(2);
-        // this->vertices[40]->setOcupied(3);     
+        int counter2 = 0;
+        for(int i = 0;i<9;i++){
+            if(i<1){
+                cards.push_back(new knight());
+                continue;
+            }
+            if(i<2){
+                cards.push_back(new yearOfPlenty());
+                continue;
+            }
+            if(i<3){
+                cards.push_back(new monopolycard());
+                continue;
+            }
+            if(i<4){
+                cards.push_back(new roadBuilding());
+                continue;
+            }
+            cards.push_back(new victoryPoint());
+        }
     }
  
 
@@ -272,7 +280,6 @@ v27∞,       ┌═ⁿv25*╖       ,╓*└v29═ç       ,⌐ⁿv31ⁿw,     
         }
         else if (this->vertices[i]->getIsOccupied() == 2)
         {
-            cout << "vertex " << i << " is occupied by a city" << endl;
             std::string placeholder = "v" + std::to_string(i);
             int replace_pos = ascii_art.find(placeholder);
             switch (this->vertices[i]->getPlayer())
@@ -296,22 +303,13 @@ v27∞,       ┌═ⁿv25*╖       ,╓*└v29═ç       ,⌐ⁿv31ⁿw,     
         }
      
     }
-    // string placeholder = "r0";
-    // int replace_pos = ascii_art.find(placeholder);
-    // ascii_art.replace(replace_pos, placeholder.length(), " " + to_string(this->vertices[0]->getSides()[0]->getId()) + " ");
     bool checked[72] = {false};
     
     for(auto v : this->hexagonboard){
         for(auto h: v){
             for(int i = 0;i<6;i++){
-                //cout << "hexa num  "<< h->getNum()<<"- "<< h->getSide(i)->getId() <<" and scounter =  "<<scounter << endl;
                 string placeholder = "r" + to_string(h->getSide(i)->getId());
                 int replace_pos = ascii_art.find(placeholder);
-                // if(scounter == 11)
-                // {cout << h->getSide(i)->getOwners()[1]->getId() <<  "     HERE  " << h->getSide(i)->getId() << endl;}
-                if(replace_pos == string::npos){
-                    cout << "Not found" << endl;
-                }
                 
                 if(replace_pos != string::npos&& !checked[h->getSide(i)->getId()])
                 {
@@ -347,7 +345,7 @@ v27∞,       ┌═ⁿv25*╖       ,╓*└v29═ç       ,⌐ⁿv31ⁿw,     
                         }
                     }
                     else{
-                        cout << "Not occupied: "<< h->getSide(i)->getId() << endl;
+                        // cout << "Not occupied: "<< h->getSide(i)->getId() << endl;
                         if(h->getSide(i)->getId()<10){
                             ascii_art.replace(replace_pos, placeholder.length(), "  ");
                         }
@@ -376,21 +374,25 @@ v27∞,       ┌═ⁿv25*╖       ,╓*└v29═ç       ,⌐ⁿv31ⁿw,     
                 canBuild = true;
             }
         }
-        cout << "Can build: " << canBuild << endl;
+        // cout << "Can build: " << canBuild << endl;
         vertex* tempV = this->vertices[v];
-        cout << "here" << endl;
-        cout << "tempV id: " << tempV->getId() << endl;
-        cout << "can build town: " << tempV->canBuildTown(playernum) << endl;
+        // cout << "here" << endl;
+        // cout << "tempV id: " << tempV->getId() << endl;
+        // cout << "can build town: " << tempV->canBuildTown(playernum) << endl;
         if(tempV->canBuildTown(playernum)&&canBuild){
             tempV->setOcupied(playernum);
         }
         else{
             cout << "Cannot build town here" << endl;
-            throw "Cannot build town here";
+            throw invalid_argument ("Cannot build road here");
         }
     }
 
     void board::setOcupiedRoad(int playernum, int v1, int v2){
+        if(v1<0 || v1>53 || v2<0 || v2>53){
+            cout << "Invalid vertex number" << endl;
+            throw invalid_argument( "Invalid vertex number");
+        }
         vector<side*> tempS = this->vertices[v1]->getSides();
         for (auto s : tempS)
         {
@@ -400,7 +402,7 @@ v27∞,       ┌═ⁿv25*╖       ,╓*└v29═ç       ,⌐ⁿv31ⁿw,     
                 }
                 else{
                     cout << "Cannot build road here" << endl;
-                    throw "Cannot build road here";
+                    throw invalid_argument ("Cannot build road here");
                 }
             }
         }
@@ -427,6 +429,7 @@ v27∞,       ┌═ⁿv25*╖       ,╓*└v29═ç       ,⌐ⁿv31ⁿw,     
                         if(v->getIsOccupied() == 1){
                             for(auto p : this->players){
                                 if(p->getPlayerNum() == v->getPlayer()){
+                                    cout << "Player " << p->getName() << " gets 1 " << hex->getType() << endl;
                                     p->addResource(hex->getType(),1);
                                 }
                             }
@@ -434,6 +437,7 @@ v27∞,       ┌═ⁿv25*╖       ,╓*└v29═ç       ,⌐ⁿv31ⁿw,     
                         if(v->getIsOccupied() == 2){
                             for(auto p : this->players){
                                 if(p->getPlayerNum() == v->getPlayer()){
+                                    cout << "Player " << p->getName() << " gets 2 " << hex->getType() << endl;
                                     p->addResource(hex->getType(),2);
                                 }
                             }
@@ -468,11 +472,11 @@ v27∞,       ┌═ⁿv25*╖       ,╓*└v29═ç       ,⌐ⁿv31ⁿw,     
     void board::firstSettlements(player* p,int v1,int v2){
         if(v1<0 || v1>53){
             cout << "Invalid vertex number" << endl;
-            throw "Invalid vertex number";
+            throw invalid_argument( "Invalid vertex number");
         }
         if(v2<0 || v2>53){
             cout << "Invalid vertex number" << endl;
-            throw "Invalid vertex number";
+            throw invalid_argument( "Invalid vertex number");
         }
         if(this->vertices[v1]->getIsOccupied() == 0 && this->vertices[v2]->getIsOccupied() == 0){
             vector<vertex*> tempV1 = this->vertices[v1]->getNeighbors();
@@ -536,6 +540,66 @@ v27∞,       ┌═ⁿv25*╖       ,╓*└v29═ç       ,⌐ⁿv31ⁿw,     
         return nullptr;
     }
 
+    void board::takeCard(player* p){
+        int cardNum = rand() % this->cards.size();
+        p->addCard(this->cards[cardNum]);
+        cout << "Player " << p->getName() << " got a card type : " <<this->cards[cardNum]->getType()  << endl;
+        this->cards.erase(this->cards.begin() + cardNum);
+    }
+
+    void board::monopoly(player* p){
+        cout << "Choose resource to take from other players" << endl;
+        cout << "1 - wood" << endl;
+        cout << "2 - bricks" << endl;
+        cout << "3 - wheat" << endl;
+        cout << "4 - ore" << endl;
+        cout << "5 - wool" << endl;
+        int resource;
+        cin >> resource;
+        string res;
+        for (auto player : this->players)
+        {
+            if(player->getPlayerNum() != p->getPlayerNum()){
+                switch (resource)
+                {
+                case 1:
+                    if(player->getwood()>0)
+                        res = "wood";
+                    else
+                        continue;
+                    break;
+                case 2:
+                    if(player->getbricks()>0)
+                        res = "bricks";
+                    else
+                        continue;
+                    break;
+                case 3:
+                    if(player->getwheat()>0)
+                        res = "wheat";
+                    else
+                        continue;
+                    break;
+                case 4:
+                    if(player->getore()>0)
+                        res = "ore";
+                    else
+                        continue;
+                    break;
+                case 5:
+                    if(player->getwool()>0)
+                        res = "wool";
+                    else
+                        continue;
+                    break;  
+                }
+                player->addResource(res,-1);
+                p->addResource(res,1);
+            }
+        }
+    }
+
+ 
 
 
 } // namespace ariel
